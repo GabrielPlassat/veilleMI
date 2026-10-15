@@ -1,1 +1,4 @@
-
+veille_MI/
+veille_MI_*.zip
+__pycache__/
+.streamlit/secrets.toml
