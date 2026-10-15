@@ -1,0 +1,238 @@
+# =====================================================================
+#  CONFIGURATION DE LA VEILLE "MODES D'INTERVENTION" (MI)
+#  Ce fichier se modifie directement dans GitHub (crayon ✏️), sans coder.
+#  Règle : garder l'indentation (2 espaces) et les tirets "- ".
+# =====================================================================
+
+# --- Albert API (DINUM) ---------------------------------------------
+albert:
+  base_url: "https://albert.api.etalab.gouv.fr/v1"
+  # Modèle utilisé pour lire et qualifier les documents.
+  # Alias stables : openweight-medium (Mistral Small 24B), openweight-large (gpt-oss-120b)
+  modele: "openweight-medium"
+  # Nombre maximum de caractères d'un rapport envoyés à Albert pour l'analyse
+  max_caracteres_analyse: 18000
+  # Collection Albert où indexer les documents retenus (pour le RAG des étapes suivantes)
+  collection: "veille-modes-intervention"
+
+# --- Référentiel de départ ------------------------------------------
+referentiel:
+  fichier: "data/MI_ademe_ART_enrichi.xlsx"
+
+# --- Périmètre thématique ----------------------------------------------
+# Albert écarte tout document qui ne traite pas de ces sujets.
+perimetre: >
+  Transition écologique au sens large : climat (atténuation et adaptation),
+  énergie (efficacité, rénovation, chaleur, électricité, renouvelables, nucléaire),
+  sortie des énergies fossiles (carburants, gaz, fioul, charbon, fiscalité énergétique),
+  mobilité et transports, industrie bas-carbone, économie circulaire et déchets,
+  eau, biodiversité, agriculture et forêt, air, aménagement et sobriété foncière.
+
+# Mots-clés thématiques utilisés pour les recherches "par évaluateur"
+themes_fr:
+  - rénovation énergétique
+  - énergies renouvelables
+  - énergies fossiles carburants
+  - mobilité transport décarbonation
+  - chaleur renouvelable
+  - économie circulaire déchets
+  - industrie décarbonation
+  - fiscalité environnementale
+  - adaptation changement climatique
+  - biodiversité eau
+themes_en:
+  - energy transition policy instrument
+  - fossil fuel subsidy reform
+  - carbon pricing
+  - building renovation programme
+  - clean transport policy
+  - industrial decarbonisation support
+
+# --- Acteurs -----------------------------------------------------------
+# role : "evaluateur", "porteur" (met en oeuvre des MI) ou "les_deux"
+# zone : France, Europe ou Monde
+# domaines : sites web officiels (sert à filtrer et cibler les recherches)
+acteurs:
+  # ---- Évaluateurs France
+  - nom: "Cour des comptes"
+    code: CCOMPTES
+    alias: []
+    role: evaluateur
+    zone: France
+    domaines: [ccomptes.fr]
+  - nom: "CESE"
+    code: CESE
+    role: evaluateur
+    zone: France
+    domaines: [lecese.fr]
+  - nom: "CGDD"
+    code: CGDD
+    alias: ["Commissariat général au développement durable"]
+    role: evaluateur
+    zone: France
+    domaines: [ecologie.gouv.fr]
+  - nom: "SDES"
+    code: SDES
+    alias: ["Service des données et études statistiques"]
+    role: evaluateur
+    zone: France
+    domaines: [statistiques.developpement-durable.gouv.fr]
+  - nom: "IGEDD"
+    code: IGEDD
+    alias: ["Inspection générale de l'environnement et du développement durable", "CGEDD"]
+    role: evaluateur
+    zone: France
+    domaines: [igedd.developpement-durable.gouv.fr]
+  - nom: "France Stratégie / HCSP"
+    code: FRSTRAT
+    alias: ["France Stratégie", "Haut-commissariat à la Stratégie et au Plan"]
+    role: evaluateur
+    zone: France
+    domaines: [strategie.gouv.fr, strategie-plan.gouv.fr]
+  - nom: "I4CE"
+    code: I4CE
+    alias: ["Institut de l'économie pour le climat", "Institute for Climate Economics"]
+    role: evaluateur
+    zone: France
+    domaines: [i4ce.org]
+  - nom: "Haut Conseil pour le Climat"
+    code: HCC
+    alias: ["Haut Conseil pour le climat", "High Council on Climate"]
+    role: evaluateur
+    zone: France
+    domaines: [hautconseilclimat.fr]
+  - nom: "SGPE"
+    code: SGPE
+    alias: ["Secrétariat général à la planification écologique", "planification écologique"]
+    role: les_deux
+    zone: France
+    domaines: [info.gouv.fr, gouvernement.fr]
+  - nom: "Sénat"
+    code: SENAT
+    role: evaluateur
+    zone: France
+    domaines: [senat.fr]
+  - nom: "Assemblée nationale"
+    code: AN
+    role: evaluateur
+    zone: France
+    domaines: [assemblee-nationale.fr]
+  - nom: "Vie publique (rapports publics)"
+    code: VIEPUB
+    role: evaluateur
+    zone: France
+    domaines: [vie-publique.fr]
+  # ---- Porteurs France (mettent en oeuvre et évaluent parfois)
+  - nom: "ADEME"
+    code: ADEME
+    alias: ["Agence de la transition écologique"]
+    role: les_deux
+    zone: France
+    domaines: [ademe.fr, librairie.ademe.fr, agirpourlatransition.ademe.fr, xd.ademe.fr]
+  - nom: "ANCT"
+    code: ANCT
+    alias: ["Agence nationale de la cohésion des territoires"]
+    role: les_deux
+    zone: France
+    domaines: [agence-cohesion-territoires.gouv.fr]
+  - nom: "CEREMA"
+    code: CEREMA
+    alias: []
+    role: les_deux
+    zone: France
+    domaines: [cerema.fr, doc.cerema.fr]
+  - nom: "ANAH"
+    code: ANAH
+    role: porteur
+    zone: France
+    domaines: [anah.gouv.fr]
+  - nom: "Bpifrance"
+    code: BPI
+    role: porteur
+    zone: France
+    domaines: [bpifrance.fr]
+  - nom: "Banque des Territoires"
+    code: BDT
+    role: porteur
+    zone: France
+    domaines: [banquedesterritoires.fr]
+  - nom: "Commission de régulation de l'énergie"
+    code: CRE
+    role: les_deux
+    zone: France
+    domaines: [cre.fr]
+  - nom: "OFB"
+    code: OFB
+    role: porteur
+    zone: France
+    domaines: [ofb.gouv.fr]
+  - nom: "Agences de l'eau"
+    code: AGEAU
+    role: porteur
+    zone: France
+    domaines: [lesagencesdeleau.fr, eaufrance.fr]
+  - nom: "Ministère / État"
+    code: ETAT
+    role: les_deux
+    zone: France
+    domaines: [economie.gouv.fr, budget.gouv.fr, legifrance.gouv.fr, ecologie.gouv.fr]
+  # ---- Europe
+  - nom: "Cour des comptes européenne"
+    code: ECA
+    alias: ["European Court of Auditors", "Cour des comptes européenne"]
+    role: evaluateur
+    zone: Europe
+    domaines: [eca.europa.eu]
+  - nom: "Agence européenne pour l'environnement"
+    code: EEA
+    alias: ["European Environment Agency"]
+    role: evaluateur
+    zone: Europe
+    domaines: [eea.europa.eu]
+  - nom: "Commission européenne"
+    code: CE
+    role: les_deux
+    zone: Europe
+    domaines: [ec.europa.eu, commission.europa.eu, cinea.ec.europa.eu]
+  # ---- Monde
+  - nom: "OCDE"
+    code: OCDE
+    alias: ["OECD", "Organisation de coopération et de développement économiques"]
+    role: evaluateur
+    zone: Monde
+    domaines: [oecd.org]
+  - nom: "Agence internationale de l'énergie"
+    code: AIE
+    alias: ["International Energy Agency", "IEA"]
+    role: evaluateur
+    zone: Monde
+    domaines: [iea.org]
+  - nom: "Banque mondiale"
+    code: BM
+    alias: ["World Bank"]
+    role: evaluateur
+    zone: Monde
+    domaines: [worldbank.org, openknowledge.worldbank.org]
+  - nom: "PNUE"
+    code: PNUE
+    alias: ["UNEP", "UN Environment"]
+    role: evaluateur
+    zone: Monde
+    domaines: [unep.org]
+
+# --- Moteur de recherche web ------------------------------------------
+# Albert API ne fait pas de recherche web : on utilise un moteur externe.
+# "duckduckgo" : gratuit, sans clé (peut ralentir si trop de requêtes)
+# "brave"      : clé gratuite sur https://api-search.brave.com (plus fiable)
+recherche:
+  moteur: "duckduckgo"
+  resultats_par_requete: 8
+  pause_entre_requetes_s: 2.0
+  # true = ne garder que les résultats venant des domaines listés ci-dessus
+  domaines_connus_seulement: true
+
+# --- Téléchargement ----------------------------------------------------
+telechargement:
+  dossier: "veille_MI"          # dossier racine (dans Google Drive avec Colab)
+  taille_max_mo: 60
+  pdf_max_par_page: 3           # nb max de PDF récupérés sur une page web
